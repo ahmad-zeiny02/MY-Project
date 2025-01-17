@@ -1,0 +1,84 @@
+﻿@model RestaurantReservation.DTOs.ReservationDto
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container mx-auto mt-8">
+    <h1 class="text-3xl font-bold mb-6 text-center">Create Reservation</h1>
+
+    <form id="reservationForm" asp-action="Create" method="post" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+        <div class="mb-4">
+            <label asp-for="Name" class="block text-gray-700 text-sm font-bold mb-2">Name</label>
+            <input asp-for="Name" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+            <span asp-validation-for="Name" class="text-red-500 text-xs italic"></span>
+        </div>
+        <div class="mb-4">
+            <label asp-for="Phone" class="block text-gray-700 text-sm font-bold mb-2">Phone</label>
+            <input asp-for="Phone" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+            <span asp-validation-for="Phone" class="text-red-500 text-xs italic"></span>
+        </div>
+        <div class="mb-4">
+            <label asp-for="Guests" class="block text-gray-700 text-sm font-bold mb-2">Number of Guests</label>
+            <input asp-for="Guests" type="number" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+            <span asp-validation-for="Guests" class="text-red-500 text-xs italic"></span>
+        </div>
+        <div class="mb-4">
+            <label asp-for="ReservationDate" class="block text-gray-700 text-sm font-bold mb-2">Reservation Date</label>
+            <input asp-for="ReservationDate" type="datetime-local" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+            <span asp-validation-for="ReservationDate" class="text-red-500 text-xs italic"></span>
+        </div>
+        <div class="flex items-center justify-between">
+            <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Create</button>
+            <a asp-action="Index" class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800">Cancel</a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#reservationForm").on("submit", function (e) {
+                let isValid = true;
+
+                const name = $("#Name").val().trim();
+                if (name === "") {
+                    $("#Name").next(".text-danger").text("Name is required.");
+                    isValid = false;
+                } else {
+                    $("#Name").next(".text-danger").text("");
+                }
+
+                const phone = $("#Phone").val().trim();
+                const phoneRegex = /^[0-9]{10}$/;
+                if (!phoneRegex.test(phone)) {
+                    $("#Phone").next(".text-danger").text("Enter a valid 10-digit phone number.");
+                    isValid = false;
+                } else {
+                    $("#Phone").next(".text-danger").text("");
+                }
+
+                const guests = parseInt($("#Guests").val());
+                if (isNaN(guests) || guests <= 0) {
+                    $("#Guests").next(".text-danger").text("Number of guests must be greater than 0.");
+                    isValid = false;
+                } else {
+                    $("#Guests").next(".text-danger").text("");
+                }
+
+               
+                const reservationDate = $("#ReservationDate").val();
+                if (reservationDate === "") {
+                    $("#ReservationDate").next(".text-danger").text("Reservation date is required.");
+                    isValid = false;
+                } else {
+                    $("#ReservationDate").next(".text-danger").text("");
+                }
+
+                if (!isValid) {
+                    e.preventDefault();
+                }
+            });
+        });
+    </script>
+}

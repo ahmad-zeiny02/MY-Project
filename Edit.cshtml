@@ -1,0 +1,44 @@
+﻿@model RestaurantReservation.DTOs.ReservationDto
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-5">
+    <h1 class="text-center mb-4 text-primary fw-bold">Edit Reservation</h1>
+    <p class="text-center text-muted">Update the details of your reservation below.</p>
+
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <form asp-action="Edit" method="post" class="shadow p-4 rounded bg-light">
+                <input type="hidden" asp-for="Id" />
+
+                <div class="form-group mb-3">
+                    <label asp-for="Name" class="form-label fw-bold">Name</label>
+                    <input asp-for="Name" class="form-control shadow-sm" placeholder="Enter your name" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                <div class="form-group mb-3">
+                    <label asp-for="Phone" class="form-label fw-bold">Phone</label>
+                    <input asp-for="Phone" class="form-control shadow-sm" placeholder="Enter your phone number" />
+                    <span asp-validation-for="Phone" class="text-danger"></span>
+                </div>
+                <div class="form-group mb-3">
+                    <label asp-for="Guests" class="form-label fw-bold">Number of Guests</label>
+                    <input asp-for="Guests" type="number" class="form-control shadow-sm" placeholder="Enter number of guests" />
+                    <span asp-validation-for="Guests" class="text-danger"></span>
+                </div>
+                <div class="form-group mb-3">
+                    <label asp-for="ReservationDate" class="form-label fw-bold">Reservation Date</label>
+                    <input asp-for="ReservationDate" type="datetime-local" class="form-control shadow-sm" />
+                    <span asp-validation-for="ReservationDate" class="text-danger"></span>
+                </div>
+
+                <div class="d-flex justify-content-between">
+                    <button type="submit" class="btn btn-success px-4 shadow-sm">Save</button>
+                    <a asp-action="Index" class="btn btn-secondary px-4 shadow-sm">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
